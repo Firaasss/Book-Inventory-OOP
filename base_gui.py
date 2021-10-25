@@ -1,20 +1,22 @@
 from tkinter import *
-import db1
+from db1 import Database
+
+database = Database("books.db")
 
 # functions for buttons
 def view_command():
     clearText(list_box)
-    for row in db1.view():
+    for row in database.view():
         list_box.insert(END, row)
 
 def search_command():
     clearText(list_box)
-    for row in db1.search(title_entry.get(), author_entry.get(), year_entry.get(), isbn_entry.get()):
+    for row in database.search(title_entry.get(), author_entry.get(), year_entry.get(), isbn_entry.get()):
         list_box.insert(END, row)
 
 def add_command():
     clearText(list_box)
-    db1.insert(title_entry.get(), author_entry.get(), year_entry.get(), isbn_entry.get())
+    database.insert(title_entry.get(), author_entry.get(), year_entry.get(), isbn_entry.get())
     list_box.insert(END, "Record added.")
 
 # for when item is selected in list_box, event param is default to bind function
@@ -38,15 +40,15 @@ def get_selected_row(event):
         print("No record is selected.")
 
 def delete_command():
-    db1.delete(selected_tuple[0])
+    database.delete(selected_tuple[0])
     clearText(list_box)
-    for row in db1.view():
+    for row in database.view():
         list_box.insert(END, row)
 
 def update_command():
-    db1.update(selected_tuple[0], title_entry.get(), author_entry.get(), year_entry.get(), isbn_entry.get())
+    database.update(selected_tuple[0], title_entry.get(), author_entry.get(), year_entry.get(), isbn_entry.get())
     clearText(list_box)
-    for row in db1.view():
+    for row in database.view():
         list_box.insert(END, row)
 
 #creating an empty window
